@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Event</title>
+        <script src="./event.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <script>
+            var base = new EventTarget({
+                prefix: 'base',
+                broadcast: true,
+                bubbles: true
+            });
+            
+            var root = new EventTarget({
+                prefix: 'root',
+                broadcast: true
+            });
+            
+            base.addTarget(root);
+            base.removeTarget(root);
+            
+            base.publish('click', {
+                defaultFn: function(e) {
+                    console.log('def'); 
+                    console.log(e);
+                }
+            });
+            
+            base.on('base:click', function(e) {
+                console.log('on'); 
+                console.log(e); 
+            });
+            
+            base.after('click', function(e) {
+                console.log('after'); 
+                console.log(e); 
+            });
+            
+            root.on('base:click', function(e) {
+                console.log('root');
+                console.log(e);
+            });
+            
+            EventGlobal.on('base:click', function(e) {
+                console.log('global'); 
+                console.log(e); 
+            });
+            
+            base.fire('click', {
+                a: 1,
+                b: 2,
+                c: 3,
+                d: 4
+            });
+        </script>
+    </body>
+</html>
