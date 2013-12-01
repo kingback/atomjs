@@ -481,7 +481,7 @@
             //leaf.fire();
             //root fire 2 times 
             each(targets, function(target) {
-                facade.target = target;
+                facade.currentTarget = target;
                 target._fireEvent(type, when, facade);
             });
         }
